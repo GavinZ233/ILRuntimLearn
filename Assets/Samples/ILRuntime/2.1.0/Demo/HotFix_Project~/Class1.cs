@@ -37,6 +37,18 @@ namespace HotFix_Project
             Debug.Log("无参成员方法");
 
         }
+
+        public void TestFun(int i)
+        {
+            Debug.Log("重载函数int "+i);
+
+        }
+
+        public void TestFun(string str)
+        {
+            Debug.Log("重载函数str " + str);
+
+        }
         public int TestFun2(int i)
         {
             Debug.Log("有参成员方法" + i);
