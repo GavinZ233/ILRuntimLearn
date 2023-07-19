@@ -54,6 +54,18 @@ namespace HotFix_Project
             Debug.Log("有参成员方法" + i);
             return i + 10;
         }
+
+        public float TestFun3(int i,ref List<int> list,out float f)
+        {
+            f = 0.5f;
+            list.Add(5);
+            for (int j = 0; j < list.Count; j++)
+            {
+                Debug.Log(list[j]);
+            }
+
+            return i + list.Count + f;
+        }
     }
 
 
