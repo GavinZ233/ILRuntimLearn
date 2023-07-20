@@ -3,3 +3,4 @@ E:\UnityProjectFormSelf\ILRuntime\Assets\StreamingAssets\HotFix_Project.dll
 E:\UnityProjectFormSelf\ILRuntime\Assets\StreamingAssets\HotFix_Project.pdb
 E:\UnityProjectFormSelf\ILRuntime\Assets\Samples\ILRuntime\2.1.0\Demo\HotFix_Project~\obj\Release\HotFix_Project.dll
 E:\UnityProjectFormSelf\ILRuntime\Assets\Samples\ILRuntime\2.1.0\Demo\HotFix_Project~\obj\Release\HotFix_Project.pdb
+E:\UnityProjectFormSelf\ILRuntime\Assets\Samples\ILRuntime\2.1.0\Demo\HotFix_Project~\obj\Release\HotFix_Project.csproj.AssemblyReference.cache
