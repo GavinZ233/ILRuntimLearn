@@ -1,4 +1,5 @@
 ﻿using ILRuntime.Runtime.Enviorment;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,11 +11,14 @@ public class Lesson10 : MonoBehaviour
 {
     public MyUnityDel1 fun1;
     public MyUnityDel2 fun2;
+
+    public Action action;
+    public Func<int, int, int> funAction;
     // Start is called before the first frame update
     void Start()
     {
         ILRuntimeMgr.Instance.StartILRuntime(() => {
-            AppDomain appDomain = ILRuntimeMgr.Instance.appDomain;
+            ILRuntime.Runtime.Enviorment.AppDomain appDomain = ILRuntimeMgr.Instance.appDomain;
             appDomain.Invoke("HotFix_Project.ILRuntimeMain","Start",null,null);
         });
     }

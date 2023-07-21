@@ -17,7 +17,10 @@ public class ILRuntimeCrossBinding
         {
             sw.WriteLine(ILRuntime.Runtime.Enviorment.CrossBindingCodeGenerator.GenerateCrossBindingAdapterCode(typeof(TestClassBase), "ILRuntimeDemo"));
         }
-
+        using (System.IO.StreamWriter sw = new System.IO.StreamWriter("Assets/Scripts/11_继承/Lesson11Adapter.cs"))
+        {
+            sw.WriteLine(ILRuntime.Runtime.Enviorment.CrossBindingCodeGenerator.GenerateCrossBindingAdapterCode(typeof(Lesson11_Test), "ILRuntimeAdapter"));
+        }
         AssetDatabase.Refresh();
     }
 }

@@ -1,6 +1,7 @@
 ﻿using ILRuntime.CLR.Utils;
 using ILRuntime.Mono.Cecil.Pdb;
 using ILRuntime.Runtime.Enviorment;
+using ILRuntimeAdapter;
 using System.Collections;
 using System.IO;
 using System.Threading;
@@ -65,25 +66,26 @@ public class ILRuntimeMgr : MonoBehaviour
     /// </summary>
     private void InitILRuntime()
     {
-        //初始化其他
-        appDomain.DelegateManager.RegisterDelegateConvertor<MyUnityDel1>((act) =>
-        {
-            return new MyUnityDel1(() =>
-            {
-                ((System.Action)act)();
-            });
-        });
+        ////初始化其他
+        //appDomain.DelegateManager.RegisterDelegateConvertor<MyUnityDel1>((act) =>
+        //{
+        //    return new MyUnityDel1(() =>
+        //    {
+        //        ((System.Action)act)();
+        //    });
+        //});
         //注册委托
         appDomain.DelegateManager.RegisterFunctionDelegate<System.Int32, System.Int32, System.Int32>();
-        //注册委托转换器
-        appDomain.DelegateManager.RegisterDelegateConvertor<MyUnityDel2>((act) =>
-        {
-            return new MyUnityDel2((i,j) =>
-            {
-                return((System.Func<System.Int32,System.Int32,System.Int32>)act)(i,j);
-            });
-        });
-
+        ////注册委托转换器
+        //appDomain.DelegateManager.RegisterDelegateConvertor<MyUnityDel2>((act) =>
+        //{
+        //    return new MyUnityDel2((i,j) =>
+        //    {
+        //        return((System.Func<System.Int32,System.Int32,System.Int32>)act)(i,j);
+        //    });
+        //});
+        //注册跨域继承适配器
+        appDomain.RegisterCrossBindingAdaptor(new Lesson11_TestAdapter());
 
         //初始化ILRuntime相关信息，告知主线程的ID，为了能够在unity的profiler分析问题
         appDomain.UnityMainThreadID = Thread.CurrentThread.ManagedThreadId;

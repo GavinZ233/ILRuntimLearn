@@ -8,15 +8,15 @@ using AutoList = System.Collections.Generic.List<object>;
 using AutoList = ILRuntime.Other.UncheckedList<object>;
 #endif
 
-namespace ILRuntimeDemo
+namespace ILRuntimeAdapter
 {   
-    public class TestClassBaseAdapter : CrossBindingAdaptor
+    public class Lesson11_TestAdapter : CrossBindingAdaptor
     {
         public override Type BaseCLRType
         {
             get
             {
-                return typeof(global::TestClassBase);
+                return typeof(global::Lesson11_Test);
             }
         }
 
@@ -33,11 +33,11 @@ namespace ILRuntimeDemo
             return new Adapter(appdomain, instance);
         }
 
-        public class Adapter : global::TestClassBase, CrossBindingAdaptorType
+        public class Adapter : global::Lesson11_Test, CrossBindingAdaptorType
         {
-            CrossBindingFunctionInfo<System.Int32> mget_Value_0 = new CrossBindingFunctionInfo<System.Int32>("get_Value");
-            CrossBindingMethodInfo<System.Int32> mset_Value_1 = new CrossBindingMethodInfo<System.Int32>("set_Value");
-            CrossBindingMethodInfo<System.String> mTestVirtual_2 = new CrossBindingMethodInfo<System.String>("TestVirtual");
+            CrossBindingFunctionInfo<System.Int32> mget_ValuePor_0 = new CrossBindingFunctionInfo<System.Int32>("get_ValuePor");
+            CrossBindingMethodInfo<System.Int32> mset_ValuePor_1 = new CrossBindingMethodInfo<System.Int32>("set_ValuePor");
+            CrossBindingMethodInfo<System.String> mTestFun_2 = new CrossBindingMethodInfo<System.String>("TestFun");
             CrossBindingMethodInfo<System.Int32> mTestAbstract_3 = new CrossBindingMethodInfo<System.Int32>("TestAbstract");
 
             bool isInvokingToString;
@@ -57,35 +57,35 @@ namespace ILRuntimeDemo
 
             public ILTypeInstance ILInstance { get { return instance; } }
 
-            public override void TestVirtual(System.String str)
+            public override void TestFun(System.String str)
             {
-                if (mTestVirtual_2.CheckShouldInvokeBase(this.instance))
-                    base.TestVirtual(str);
+                if (mTestFun_2.CheckShouldInvokeBase(this.instance))
+                    base.TestFun(str);
                 else
-                    mTestVirtual_2.Invoke(this.instance, str);
+                    mTestFun_2.Invoke(this.instance, str);
             }
 
-            public override void TestAbstract(System.Int32 gg)
+            public override void TestAbstract(System.Int32 value)
             {
-                mTestAbstract_3.Invoke(this.instance, gg);
+                mTestAbstract_3.Invoke(this.instance, value);
             }
 
-            public override System.Int32 Value
+            public override System.Int32 ValuePor
             {
             get
             {
-                if (mget_Value_0.CheckShouldInvokeBase(this.instance))
-                    return base.Value;
+                if (mget_ValuePor_0.CheckShouldInvokeBase(this.instance))
+                    return base.ValuePor;
                 else
-                    return mget_Value_0.Invoke(this.instance);
+                    return mget_ValuePor_0.Invoke(this.instance);
 
             }
             set
             {
-                if (mset_Value_1.CheckShouldInvokeBase(this.instance))
-                    base.Value = value;
+                if (mset_ValuePor_1.CheckShouldInvokeBase(this.instance))
+                    base.ValuePor = value;
                 else
-                    mset_Value_1.Invoke(this.instance, value);
+                    mset_ValuePor_1.Invoke(this.instance, value);
 
             }
             }
