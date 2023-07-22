@@ -87,6 +87,8 @@ public class ILRuntimeMgr : MonoBehaviour
         //注册跨域继承适配器
         appDomain.RegisterCrossBindingAdaptor(new Lesson11_TestAdapter());
 
+        ILRuntime.Runtime.Generated.CLRBindings.Initialize(appDomain);
+
         //初始化ILRuntime相关信息，告知主线程的ID，为了能够在unity的profiler分析问题
         appDomain.UnityMainThreadID = Thread.CurrentThread.ManagedThreadId;
 

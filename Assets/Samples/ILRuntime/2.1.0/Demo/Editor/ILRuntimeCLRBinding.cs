@@ -5,6 +5,9 @@ using System;
 using System.Text;
 using System.Collections.Generic;
 using ILRuntimeDemo;
+using ILRuntime.Runtime.Enviorment;
+using ILRuntimeAdapter;
+
 [System.Reflection.Obfuscation(Exclude = true)]
 public class ILRuntimeCLRBinding
 {
@@ -39,6 +42,10 @@ public class ILRuntimeCLRBinding
         domain.RegisterCrossBindingAdaptor(new MonoBehaviourAdapter());
         domain.RegisterCrossBindingAdaptor(new CoroutineAdapter());
         domain.RegisterCrossBindingAdaptor(new TestClassBaseAdapter());
+
+        domain.RegisterCrossBindingAdaptor(new Lesson11_TestAdapter());
+
+
         domain.RegisterValueTypeBinder(typeof(Vector3), new Vector3Binder());
         domain.RegisterValueTypeBinder(typeof(Vector2), new Vector2Binder());
         domain.RegisterValueTypeBinder(typeof(Quaternion), new QuaternionBinder());
