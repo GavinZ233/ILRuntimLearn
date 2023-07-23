@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 
 namespace HotFix_Project
@@ -66,12 +67,43 @@ namespace HotFix_Project
             //testLesson11.TestAbstract(3);
             //testLesson11.valuePublic = 99;
             //Debug.Log(testLesson11.valuePublic);
-            System.DateTime currentTime = System.DateTime.Now;
-            for (int i = 0; i < 100000; i++)
+
+
+            //System.DateTime currentTime = System.DateTime.Now;
+            //for (int i = 0; i < 100000; i++)
+            //{
+            //    Lesson13.TestFun(i, i);
+            //}
+            //Debug.Log("花费时间：" + (System.DateTime.Now - currentTime).TotalMilliseconds + "ms");
+
+
+            //GameObject monoContent = new GameObject();
+            //ILRuntimeMono ilmono=monoContent.AddComponent<ILRuntimeMono>();
+            //ilmono.startEvent += (() =>
+            //{
+            //    Debug.Log("start");
+
+            //});
+            //ilmono.updateEvent += (() =>
+            //{
+            //    Debug.Log("update");
+            //});
+
+
+            //Lesson16
+            Lesson16 lesson=Camera.main.GetComponent<Lesson16>();
+            lesson.StartCoroutine(Lesson16Test());
+        }
+
+        public static IEnumerator Lesson16Test()
+        {
+            for (int i = 0; i < 6; i++)
             {
-                Lesson13.TestFun(i, i);
+                Debug.Log(i);
+                yield return new WaitForSeconds(1f);
+
             }
-            Debug.Log("花费时间：" + (System.DateTime.Now - currentTime).TotalMilliseconds + "ms");
+
         }
 
         public static void Fun1()

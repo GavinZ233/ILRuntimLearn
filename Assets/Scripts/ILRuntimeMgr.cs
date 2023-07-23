@@ -1,10 +1,17 @@
-﻿using ILRuntime.CLR.Utils;
+﻿using ILRuntime.CLR.Method;
+using ILRuntime.CLR.Utils;
 using ILRuntime.Mono.Cecil.Pdb;
 using ILRuntime.Runtime.Enviorment;
+using ILRuntime.Runtime.Intepreter;
+using ILRuntime.Runtime.Stack;
 using ILRuntimeAdapter;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
+using System.Runtime.ConstrainedExecution;
 using System.Threading;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Networking;
@@ -64,7 +71,7 @@ public class ILRuntimeMgr : MonoBehaviour
     /// <summary>
     /// 初始化ILRuntime相关内容
     /// </summary>
-    private void InitILRuntime()
+    private unsafe void InitILRuntime()
     {
         ////初始化其他
         //appDomain.DelegateManager.RegisterDelegateConvertor<MyUnityDel1>((act) =>
@@ -86,12 +93,40 @@ public class ILRuntimeMgr : MonoBehaviour
         //});
         //注册跨域继承适配器
         appDomain.RegisterCrossBindingAdaptor(new Lesson11_TestAdapter());
+        //注册携程继承适配器
+        appDomain.RegisterCrossBindingAdaptor(new CoroutineAdapter());
 
+
+        //CLR重定向内容，要卸载clr绑定之前
+        System.Type debugType=typeof(Debug);
+        //得到要重定向方法的方法信息
+        MethodInfo methodInfo =debugType.GetMethod("Log",new System.Type[] {typeof(object)});
+        appDomain.RegisterCLRMethodRedirection(methodInfo, MyLog);
+
+        //注册CLR绑定
         ILRuntime.Runtime.Generated.CLRBindings.Initialize(appDomain);
 
         //初始化ILRuntime相关信息，告知主线程的ID，为了能够在unity的profiler分析问题
         appDomain.UnityMainThreadID = Thread.CurrentThread.ManagedThreadId;
 
+    }
+
+    unsafe StackObject* MyLog(ILIntepreter __intp, StackObject* __esp, List<object>  __mStack, CLRMethod __method, bool isNewObj)
+    {
+        ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+        StackObject* ptr_of_this_method;
+        StackObject* __ret = ILIntepreter.Minus(__esp, 1);
+
+        ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
+        System.Object @message = (System.Object)typeof(System.Object).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (ILRuntime.CLR.Utils.Extensions.TypeFlags)0);
+        __intp.Free(ptr_of_this_method);
+
+        //获取堆栈信息
+        var stackTrace = __domain.DebugService.GetStackTrace(__intp);
+
+        UnityEngine.Debug.Log(message + "\n" + stackTrace);
+
+        return __ret;
     }
     /// <summary>
     /// 热更初始化完毕后，执行的内容
